@@ -29,68 +29,36 @@ class CanvasManager {
 
   resizeCanvas() {
     const oldStrokes = [...this.strokes];
-    
-    // Get device pixel ratio for better rendering on high DPI screens
-    const dpr = window.devicePixelRatio || 1;
-    
-    // Set canvas size based on client dimensions
-    const displayWidth = Math.floor(window.innerWidth);
-    const displayHeight = Math.floor(window.innerHeight);
-    
-    // Update canvas size accounting for pixel ratio
-    this.canvas.width = displayWidth * dpr;
-    this.canvas.height = displayHeight * dpr;
-    
-    // Scale the canvas context to ensure correct drawing
-    this.ctx.scale(dpr, dpr);
-    
-    // Set display size through CSS
-    this.canvas.style.width = `${displayWidth}px`;
-    this.canvas.style.height = `${displayHeight}px`;
-    
-    // Restore strokes and redraw
+
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
+
     this.strokes = oldStrokes;
     this.redrawCanvas();
   }
 
   setupEventListeners() {
-    // Mouse events
     this.canvas.addEventListener('mousedown', (e) => this.startDrawing(e));
     this.canvas.addEventListener('mousemove', (e) => this.draw(e));
     this.canvas.addEventListener('mouseup', () => this.stopDrawing());
     this.canvas.addEventListener('mouseleave', () => this.stopDrawing());
 
-    // Touch events with better handling
     this.canvas.addEventListener('touchstart', (e) => {
       e.preventDefault();
       const touch = e.touches[0];
-      const touchEvent = {
-        clientX: touch.clientX,
-        clientY: touch.clientY,
-        isTouch: true
-      };
-      this.startDrawing(touchEvent);
+      this.startDrawing(touch);
     }, { passive: false });
 
     this.canvas.addEventListener('touchmove', (e) => {
       e.preventDefault();
       const touch = e.touches[0];
-      const touchEvent = {
-        clientX: touch.clientX,
-        clientY: touch.clientY,
-        isTouch: true
-      };
-      this.draw(touchEvent);
+      this.draw(touch);
     }, { passive: false });
 
-    this.canvas.addEventListener('touchend', () => {
+    this.canvas.addEventListener('touchend', (e) => {
+      e.preventDefault();
       this.stopDrawing();
     }, { passive: false });
-
-    // Handle orientation change
-    window.addEventListener('orientationchange', () => {
-      setTimeout(() => this.resizeCanvas(), 100);
-    });
   }
 
   normalizeCoordinate(x, y) {
@@ -109,13 +77,9 @@ class CanvasManager {
 
   getCanvasCoordinates(e) {
     const rect = this.canvas.getBoundingClientRect();
-    const dpr = window.devicePixelRatio || 1;
-    const scaleX = this.canvas.width / (rect.width * dpr);
-    const scaleY = this.canvas.height / (rect.height * dpr);
-    
     return {
-      x: ((e.clientX || e.pageX) - rect.left) * scaleX,
-      y: ((e.clientY || e.pageY) - rect.top) * scaleY
+      x: (e.clientX || e.pageX) - rect.left,
+      y: (e.clientY || e.pageY) - rect.top
     };
   }
 
