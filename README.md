@@ -172,11 +172,10 @@ Deploy the `client` folder to any static hosting service:
 ### Backend Deployment
 Deploy the server to any Node.js hosting service:
 - Heroku
-- Railway
-- DigitalOcean App Platform
-- AWS Elastic Beanstalk
+- Render
 
-**Backend URL**: `https://your-backend.herokuapp.com`
+**Backend URL**: `https://your-backend.onrender.com`
+`
 
 ### Environment Configuration
 
@@ -200,18 +199,6 @@ this.socket = io('https://your-backend-url.com');
 - Safari: Full support
 - Mobile browsers: Full support with touch events
 
-## License
-
-MIT
-
-## Time Spent
-
-Approximately 6-7 hours of development time, including:
-- Architecture and planning: 1 hour
-- Backend implementation: 1.5 hours
-- Frontend implementation: 3 hours
-- Testing and refinement: 1 hour
-- Documentation: 0.5 hours
 
 ## Author
 
