@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flam Collaborative Canvas</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <canvas id="canvas"></canvas>
+
+    <div class="toolbar">
+      <div class="toolbar-section">
+        <button id="draw-btn" class="tool-btn active" title="Draw" data-tool="draw">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
+            <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
+            <path d="M2 2l7.586 7.586"></path>
+          </svg>
+        </button>
+        <button id="erase-btn" class="tool-btn" title="Erase" data-tool="erase">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 20H7L3 16l8-8 8 8-2 4z"></path>
+            <path d="M7 20h13"></path>
+          </svg>
+        </button>
+      </div>
+
+      <div class="toolbar-divider"></div>
+
+      <div class="toolbar-section">
+        <button id="undo-btn" class="tool-btn" title="Undo">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 7v6h6"></path>
+            <path d="M21 17a9 9 0 00-9-9 9 9 0 00-6 2.3L3 13"></path>
+          </svg>
+        </button>
+        <button id="redo-btn" class="tool-btn" title="Redo">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 7v6h-6"></path>
+            <path d="M3 17a9 9 0 019-9 9 9 0 016 2.3l3 2.7"></path>
+          </svg>
+        </button>
+      </div>
+
+      <div class="toolbar-divider"></div>
+
+      <div class="toolbar-section">
+        <div class="color-picker-wrapper">
+          <input type="color" id="color-picker" value="#000000" title="Color">
+          <div class="color-display" id="color-display"></div>
+        </div>
+        <div class="width-control">
+          <input type="range" id="width-slider" min="1" max="20" value="3" title="Brush Width">
+          <span id="width-value">3</span>
+        </div>
+      </div>
+
+      <div class="toolbar-divider"></div>
+
+      <div class="toolbar-section">
+        <button id="clear-btn" class="tool-btn clear-btn" title="Clear Canvas">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="3 6 5 6 21 6"></polyline>
+            <path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"></path>
+          </svg>
+        </button>
+        <button id="export-btn" class="tool-btn" title="Export PNG">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="users-panel" id="users-panel">
+      <h3>Active Users</h3>
+      <div id="users-list"></div>
+    </div>
+
+    <div class="cursors-container" id="cursors-container"></div>
+
+    <div class="room-info" id="room-info">
+      Room: <span id="room-id-display">default</span>
+    </div>
+
+    <div class="latency-display" id="latency-display">
+      Latency: <span id="latency-value">--</span>ms
+    </div>
+  </div>
+
+  <div class="welcome-modal" id="welcome-modal">
+    <div class="modal-content">
+      <h2>Join Collaborative Canvas</h2>
+      <input type="text" id="username-input" placeholder="Enter your name" maxlength="20">
+      <input type="text" id="room-input" placeholder="Room ID (default: 'default')" value="default">
+      <button id="join-btn">Join Room</button>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="canvas.js"></script>
+  <script src="websocket.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
