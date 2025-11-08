@@ -12,7 +12,8 @@ class WebSocketManager {
   }
 
   connect() {
-    this.socket = io();
+    this.socket = io('https://drawing-canvas-z616.onrender.com');
+
 
     this.socket.on('connect', () => {
       console.log('Connected to server');
